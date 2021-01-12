@@ -196,6 +196,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101122301496_Account.cs" />
+    <Compile Include="Migrations\202101122301496_Account.designer.cs">
+      <DependentUpon>202101122301496_Account.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -300,6 +305,11 @@
       <Project>{951fc110-e57b-450d-8ecb-ffdf2a6670bb}</Project>
       <Name>WebShop.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101122301496_Account.resx">
+      <DependentUpon>202101122301496_Account.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
