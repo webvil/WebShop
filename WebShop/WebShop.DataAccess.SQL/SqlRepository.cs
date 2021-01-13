@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,18 +11,18 @@ namespace WebShop.DataAccess.SQL
 {
     public class SqlRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly DataContext context;
-        readonly string className;
+        internal DataContext context; // so it is accessible inside the DataAccess.SQL project
+        internal DbSet<T> dbSet;
 
         public SqlRepository(DataContext context)
         {
             this.context = context;
-            className = typeof(T).Name;
+            this.dbSet = context.Set<T>();
+            
         }
         public IQueryable<T> Collection()
         {
-            return context.Set<T>();
-
+            return dbSet;
         }
 
         public void Commit()
@@ -32,41 +33,28 @@ namespace WebShop.DataAccess.SQL
         public void Delete(string Id)
         {
             var entity = Find(Id);
-            context.Set<T>().Remove(entity);
-            Commit();
+            if (context.Entry(entity).State == EntityState.Detached)
+            {
+                dbSet.Attach(entity);
+            }
+            dbSet.Remove(entity);
+            
         }
 
         public T Find(string Id)
         {
-            T t = context.Set<T>().Find(Id);
-            if (t != null)
-            {
-                return t;
-            }
-            else
-            {
-                throw new Exception(className + " not found");
-            }
+            return dbSet.Find(Id);
         }
 
         public void Insert(T t)
         {
-            context.Set<T>().Add(t);
-            Commit();
+            dbSet.Add(t);
         }
 
         public void Update(T t)
         {
-            T tToUpdate = context.Set<T>().FirstOrDefault();
-            if (tToUpdate != null)
-            {
-                tToUpdate = t;
-
-            }
-            else
-            {
-                throw new Exception(className + " not found");
-            }
+            dbSet.Attach(t);
+            context.Entry(t).State = EntityState.Modified;
         }
     }
 }
