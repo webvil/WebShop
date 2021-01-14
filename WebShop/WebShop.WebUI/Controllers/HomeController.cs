@@ -11,8 +11,8 @@ namespace WebShop.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        IRepository<Product> context;
-        IRepository<ProductCategory> productCategories;
+        readonly IRepository<Product> context;
+        readonly IRepository<ProductCategory> productCategories;
         public HomeController(IRepository<Product> productContext,
           IRepository<ProductCategory> productCategories)
         {
@@ -22,7 +22,6 @@ namespace WebShop.WebUI.Controllers
         public ActionResult Index(string Category = null)
         {
             List<Product> products;
-            List<ProductCategory> categories = productCategories.Collection().ToList();
 
             if (Category == null)
             {
@@ -35,7 +34,7 @@ namespace WebShop.WebUI.Controllers
             var model = new ProductListViewModel
             {
                 Products = products,
-                ProductCategories = categories
+                ProductCategories = productCategories.Collection().ToList()
             };
 
             return View(model);
