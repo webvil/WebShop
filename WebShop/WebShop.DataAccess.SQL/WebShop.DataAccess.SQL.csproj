@@ -56,6 +56,10 @@
     <Compile Include="Migrations\202101121336467_Initial.designer.cs">
       <DependentUpon>202101121336467_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101142203465_ShoppingCartAdded.cs" />
+    <Compile Include="Migrations\202101142203465_ShoppingCartAdded.designer.cs">
+      <DependentUpon>202101142203465_ShoppingCartAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlRepository.cs" />
@@ -73,6 +77,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202101121336467_Initial.resx">
       <DependentUpon>202101121336467_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101142203465_ShoppingCartAdded.resx">
+      <DependentUpon>202101142203465_ShoppingCartAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

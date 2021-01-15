@@ -42,6 +42,18 @@ namespace WebShop.WebUI.Controllers
 
         public ActionResult Details(string Id)
         {
+            Session["details"] = "hello session";
+            Product product = context.Find(Id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        public ActionResult Cart(string Id)
+        {
+            
             Product product = context.Find(Id);
             if (product == null)
             {

@@ -1,0 +1,56 @@
+﻿@model WebShop.WebUI.ViewModels.ShoppingCartViewModel
+
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+
+<h2>Shopping Cart</h2>
+
+<p>
+    @Html.ActionLink("Back to store", "Index", "Home")
+</p>
+@if (Model.Cart.ShoppingCartItems.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Handle</th>
+        </tr>
+
+        @foreach (var item in Model.Cart.ShoppingCartItems)
+        {
+            <tr>
+                <td><img src="~/Content/img/products/@item.Product.Image" width="80px" /></td>
+                <td>@item.Product.Name</td>
+                <td>@item.Amount</td>
+                <td>@item.Product.Price</td>
+                <td>@((item.Product.Price * item.Amount).ToString("c"))</td>
+
+
+                <td>
+
+                    @Html.ActionLink("Add", "AddToCart", new { id = item.Product.Id }) |
+                    @Html.ActionLink("Remove", "RemoveFromCart", new { id = item.Product.Id })
+                </td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td><strong>Grand total</strong></td>
+            <td></td>
+            <td></td>
+            <td><strong>@Model.Total kr</strong></td>
+            <td></td>
+        </tr>
+    </table>
+    
+
+}
+else
+{
+    <h4>There are no items in Cart. Please add a product.</h4>
+}
