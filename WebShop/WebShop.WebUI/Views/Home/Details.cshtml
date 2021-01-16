@@ -43,7 +43,7 @@
                 </dt>
 
                 <dd>
-                    <a href="/" class="btn btn-default">Add to basket</a>
+                    <a href="@Url.Action("AddTBasket", "Basket", new { Id=Model.Id })" class="btn btn-default">Add to basket</a>
                 </dd>
 
             </dl>
@@ -52,6 +52,6 @@
             </p>
         </div>
     </div>
-    
+    <div class="col-md-12 clearfix"></div>
 </div>
 
