@@ -52,17 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\202101121336467_Initial.cs" />
-    <Compile Include="Migrations\202101121336467_Initial.designer.cs">
-      <DependentUpon>202101121336467_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101142203465_ShoppingCartAdded.cs" />
-    <Compile Include="Migrations\202101142203465_ShoppingCartAdded.designer.cs">
-      <DependentUpon>202101142203465_ShoppingCartAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101151710312_AddBasket.cs" />
-    <Compile Include="Migrations\202101151710312_AddBasket.designer.cs">
-      <DependentUpon>202101151710312_AddBasket.cs</DependentUpon>
+    <Compile Include="Migrations\202101160849263_Initial.cs" />
+    <Compile Include="Migrations\202101160849263_Initial.designer.cs">
+      <DependentUpon>202101160849263_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,14 +71,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101121336467_Initial.resx">
-      <DependentUpon>202101121336467_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101142203465_ShoppingCartAdded.resx">
-      <DependentUpon>202101142203465_ShoppingCartAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101151710312_AddBasket.resx">
-      <DependentUpon>202101151710312_AddBasket.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101160849263_Initial.resx">
+      <DependentUpon>202101160849263_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
