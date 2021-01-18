@@ -17,6 +17,9 @@ namespace WebShop.Core.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
+
+        [DisplayName("Brand Name")]
+        public string Brand { get; set; }
         public string Image { get; set; }
         [Range(0, 1000)]
         public decimal Price { get; set; }
