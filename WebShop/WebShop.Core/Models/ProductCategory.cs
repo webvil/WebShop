@@ -10,6 +10,9 @@ namespace WebShop.Core.Models
     {
 
         public string Category { get; set; }
+
+        public string ParentCategory { get; set; }
+
         
     }
 }

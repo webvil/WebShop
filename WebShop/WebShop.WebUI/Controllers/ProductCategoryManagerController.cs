@@ -23,7 +23,7 @@ namespace WebShop.WebUI.Controllers
             List<ProductCategory> productCategories = context.Collection().ToList();
             return View(productCategories);
         }
-
+        //GET
         public ActionResult Create()
         {
             ProductCategory productCategory = new ProductCategory();
