@@ -12,13 +12,17 @@ namespace WebShop.Services
 {
     public class BasketService : IBasketService
     {
-        IRepository<Product> productContext;
-        IRepository<Basket> basketContext;
-        public const String BasketSessionName = "eCommerceBasket";
-        public BasketService(IRepository<Product> ProductContext, IRepository<Basket> BasketContext)
+        readonly IRepository<Product> productContext;
+        readonly IRepository<Basket> basketContext;
+        readonly IRepository<BasketItem> basketItemContext;
+        public const string BasketSessionName = "eCommerceBasket";
+        public BasketService(IRepository<Product> ProductContext, 
+            IRepository<Basket> BasketContext,
+            IRepository<BasketItem> BasketItemContext)
         {
             productContext = ProductContext;
             basketContext = BasketContext;
+            basketItemContext = BasketItemContext;
 
         }
         
@@ -62,9 +66,11 @@ namespace WebShop.Services
             Basket basket = new Basket();
             basketContext.Insert(basket);
             basketContext.Commit();
-            HttpCookie cookie = new HttpCookie(BasketSessionName);
-            cookie.Value = basket.Id;
-            cookie.Expires = DateTime.Now.AddDays(1);
+            HttpCookie cookie = new HttpCookie(BasketSessionName)
+            {
+                Value = basket.Id,
+                Expires = DateTime.Now.AddDays(1)
+            };
             httpContext.Response.Cookies.Add(cookie);
             return basket;
         }
@@ -73,7 +79,7 @@ namespace WebShop.Services
         {
             // create if null
             Basket basket = GetBasket(httpContext, true);
-            // Load from db
+            // Is this looking in db or in memory?
             BasketItem item = basket.BasketItems.FirstOrDefault(i => i.ProductId == productId);
             // does item exist in basket
             if (item == null)
@@ -95,20 +101,35 @@ namespace WebShop.Services
         public void RemoveFromBasket(HttpContextBase httpContext, string itemId)
         {
             Basket basket = GetBasket(httpContext, true);
-            BasketItem item = basket.BasketItems.FirstOrDefault(i => i.Id == itemId);
-            if (item != null)
+            if (basket != null)
             {
-                basket.BasketItems.Remove(item);
-                basketContext.Commit();
+                BasketItem item = basket.BasketItems.FirstOrDefault(i => i.Id == itemId);
+                if (item != null)
+                {
+                    if (item.Quantity > 1)
+                    {
+                        item.Quantity--;
+                    }
+
+                    else
+                    {
+                        basketItemContext.Delete(itemId);
+                        //basketContext.BasketItems.Remove(item);
+                        basketItemContext.Commit();
+                    }
+
+                }
+                    basketContext.Commit();
             }
+           
         }
 
         public List<BasketItemViewModel> GetBasketItems(HttpContextBase httpContext)
         {
             // get basket from db
-            // if there are bi items return basket in memory
-            Basket basket = GetBasket (httpContext, false);
-            if (basket == null)
+            // if there are no items return basket in memory
+            Basket basket = GetBasket(httpContext, false);
+            if (basket != null)
             {
                 var results = (from b in basket.BasketItems
                                join p in productContext.Collection()
@@ -133,7 +154,7 @@ namespace WebShop.Services
         {
             Basket basket = GetBasket(httpContext, false);
             // Default ViewModel to zero
-            BasketSummaryViewModel model = new BasketSummaryViewModel();
+            BasketSummaryViewModel model = new BasketSummaryViewModel(0,0);
             if (basket != null)
             {
                 // Calculate items in basket with Linq
