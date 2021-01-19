@@ -26,6 +26,8 @@ namespace WebShop.WebUI.Controllers
         //GET
         public ActionResult Create()
         {
+            List<ProductCategory> parentCategories = context.Collection().Where(c => c.ParentCategory == null).ToList();
+            ViewBag.ParentCategories = parentCategories;
             ProductCategory productCategory = new ProductCategory();
             return View(productCategory);
         }
