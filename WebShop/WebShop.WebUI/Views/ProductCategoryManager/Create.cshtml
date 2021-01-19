@@ -13,7 +13,7 @@
         @Html.LabelFor(model => model.ParentCategory, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.ParentCategory, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.DropDownListFor(model => model.ParentCategory, new SelectList(ViewBag.ParentCategories, "Category", "Category"), htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.ParentCategory, new SelectList(ViewBag.ParentCategories, "ParentCategory"), htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ParentCategory, "", new { @class = "text-danger" })
         </div>
     </div>
