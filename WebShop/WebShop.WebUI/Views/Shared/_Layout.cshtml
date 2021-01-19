@@ -18,18 +18,30 @@
             @Html.ActionLink("Happy Homes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
 
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            @{
+                Html.RenderAction("BasketSummary", "Basket");
+            }
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="#" class="nav-link">Register</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/Home/Contact" class="nav-link">Contact</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a href="/ProductManager" class="dropdown-item">Products</a>
+                        <a href="/ProductCategoryManager" class="dropdown-item">Categories</a>
+                    </div>
+                </li>
 
-                    <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="/ProductManager" class="nav-link">Product Admin</a>"</li>                    
-                    <li class="nav-item"><a href="/ProductCategoryManager" class="nav-link">Product Manager</a></li>
-                    
-                </ul>
-                @{
-                    Html.RenderAction("BasketSummary", "Basket");
-                }
-            </div>
+
+
+            </ul>
+
+        </div>
         </div>
     </nav>
     <div class="container body-content">
