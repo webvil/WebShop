@@ -64,6 +64,14 @@
     <Compile Include="Migrations\202101181345265_ParentCategory.designer.cs">
       <DependentUpon>202101181345265_ParentCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101190849516_SubCategory.cs" />
+    <Compile Include="Migrations\202101190849516_SubCategory.designer.cs">
+      <DependentUpon>202101190849516_SubCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101190948146_delete.cs" />
+    <Compile Include="Migrations\202101190948146_delete.designer.cs">
+      <DependentUpon>202101190948146_delete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlRepository.cs" />
@@ -87,6 +95,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101181345265_ParentCategory.resx">
       <DependentUpon>202101181345265_ParentCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101190849516_SubCategory.resx">
+      <DependentUpon>202101190849516_SubCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101190948146_delete.resx">
+      <DependentUpon>202101190948146_delete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -74,8 +74,8 @@ namespace WebShop.WebUI.Controllers
                 {
                     return View(productCategory);
                 }
+                productCategoryToEdit.ParentCategory = productCategory.ParentCategory;
                 productCategoryToEdit.Category = productCategory.Category;
-                
                 context.Commit();
                 return RedirectToAction("Index");
             }
