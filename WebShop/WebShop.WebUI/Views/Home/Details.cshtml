@@ -4,54 +4,64 @@
     ViewBag.Title = Model.Name + " Details";
 }
 
-<h2>Details for @Html.DisplayFor(model => model.Name)</h2>
-<hr />
-<div class="row">
-    
-    <div class="col-md-2">
-        
-        <img class="img-responsive" src="~/Content/img/products/@Model.Image" />
-    </div>
-    <div class="col-md-10">
-        <div>
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.CreatedAt)
-                </dt>
+<div class="container">
 
-                <dd>
-                    @Html.DisplayFor(model => model.CreatedAt)
-                </dd>
+    <div class="row">
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Description)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Price)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Price)
-                </dd>
-
-                <dt>
-                </dt>
-
-                <dd>
-                    <a href="@Url.Action("AddToBasket", "Basket", new { Id=Model.Id })" class="btn btn-default">Add to basket</a>
-                </dd>
-
-            </dl>
-            <p class="text-right">
-                @Html.ActionLink("Back to List", "Index")
-            </p>
+        <div class="col-lg-3">
+            
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Category 1</a>
+                <a href="#" class="list-group-item">Category 2</a>
+                <a href="#" class="list-group-item">Category 3</a>
+            </div>
+            @Html.ActionLink("Back to List", "Index")
         </div>
-    </div>
-    <div class="col-md-12 clearfix"></div>
-</div>
+        <!-- /.col-lg-3 -->
 
+        <div class="col-lg-9">
+
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid" src="~/Content/img/products/@Model.Image" alt="">
+                <div class="card-body">
+                    <h3 class="card-title">@Html.DisplayFor(model => model.Name)</h3>
+                    <h4>$24.99</h4>
+                    <p class="card-text">
+
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
+                    <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                    4.0 stars
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("AddToBasket", "Basket" , new { Id=Model.Id })" class="btn btn-default">Add to basket</a>
+                </div>
+            </div>
+
+            <!-- /.card -->
+
+            <div class="card card-outline-secondary my-4">
+                <div class="card-header">
+                    Product Reviews
+                </div>
+                <div class="card-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                    <hr>
+                    <a href="#" class="btn btn-success">Leave a Review</a>
+                </div>
+            </div>
+            <!-- /.card -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+
+</div>
