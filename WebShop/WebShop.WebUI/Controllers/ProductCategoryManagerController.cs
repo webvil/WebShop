@@ -23,9 +23,11 @@ namespace WebShop.WebUI.Controllers
             List<ProductCategory> productCategories = context.Collection().ToList();
             return View(productCategories);
         }
-
+        //GET
         public ActionResult Create()
         {
+            List<ProductCategory> parentCategories = context.Collection().Where(c => c.ParentCategory == null).ToList();
+            ViewBag.ParentCategories = parentCategories;
             ProductCategory productCategory = new ProductCategory();
             return View(productCategory);
         }
@@ -74,8 +76,8 @@ namespace WebShop.WebUI.Controllers
                 {
                     return View(productCategory);
                 }
+                productCategoryToEdit.ParentCategory = productCategory.ParentCategory;
                 productCategoryToEdit.Category = productCategory.Category;
-                
                 context.Commit();
                 return RedirectToAction("Index");
             }

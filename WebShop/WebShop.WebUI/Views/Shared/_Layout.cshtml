@@ -1,43 +1,56 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta name="viewport" content="width=device-width  initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title - Happy homes</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Product Admin", "Index", "ProductManager")</li>
-                    <li>@Html.ActionLink("Category Admin", "Index", "ProductCategoryManager")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-               
-                @{ 
-                    Html.RenderAction("BasketSummary", "Basket");
-                }
-            </div>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @Html.ActionLink("Happy Homes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            @{
+                Html.RenderAction("BasketSummary", "Basket");
+            }
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="#" class="nav-link">Register</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/Home/Contact" class="nav-link">Contact</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a href="/ProductManager" class="dropdown-item">Products</a>
+                        <a href="/ProductCategoryManager" class="dropdown-item">Categories</a>
+                    </div>
+                </li>
+
+
+
+            </ul>
+
         </div>
-    </div>
+        </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; @DateTime.Now.Year - Happy Homes</p>
+            </div>
+            <!-- /.container -->
         </footer>
     </div>
 
@@ -46,3 +59,4 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+

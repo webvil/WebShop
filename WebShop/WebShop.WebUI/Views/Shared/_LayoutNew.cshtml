@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width  initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title - Happy homes</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @Html.ActionLink("Happ Homes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Product Admin", "Index", "ProductManager", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Category Admin", "Index", "ProductCategoryManager", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+                </ul>
+                @{
+                    Html.RenderAction("BasketSummary", "Basket");
+                }
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; @DateTime.Now.Year - Happy Homes</p>
+            </div>
+            <!-- /.container -->
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
