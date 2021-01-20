@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using WebShop.Core.Contracts;
 using WebShop.Core.Models;
 
@@ -56,6 +57,12 @@ namespace WebShop.DataAccess.SQL
             dbSet.Attach(t);
             context.Entry(t).State = EntityState.Modified;
         }
+
+        /*public IEnumerable<T> GetAll() where T : ProductCategory 
+        {
+            var categories = Collection().Where(c => c.ParentId == null).Include(c => c.Children).ToList();
+            return categories;
+        }*/
     }
 }
     

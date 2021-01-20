@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -27,7 +28,7 @@ namespace WebShop.WebUI.Controllers
         public ActionResult Create()
         {
 
-            var parentCategories = context.Collection().Select(c => c.ParentCategory).Distinct().ToList();
+            var parentCategories = context.Collection().Where(c => c.ParentId == null).ToList();
             ViewBag.ParentCategories = parentCategories;
             ProductCategory productCategory = new ProductCategory();
             return View(productCategory);
@@ -77,7 +78,7 @@ namespace WebShop.WebUI.Controllers
                 {
                     return View(productCategory);
                 }
-                productCategoryToEdit.ParentCategory = productCategory.ParentCategory;
+                productCategoryToEdit.ParentId = productCategory.ParentId;
                 productCategoryToEdit.Category = productCategory.Category;
                 context.Commit();
                 return RedirectToAction("Index");
@@ -114,6 +115,8 @@ namespace WebShop.WebUI.Controllers
             }
 
         }
+
+        
 
     }
 }

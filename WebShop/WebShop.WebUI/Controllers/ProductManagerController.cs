@@ -8,6 +8,7 @@ using WebShop.DataAccess.InMemory;
 using WebShop.Core.ViewModels;
 using WebShop.Core.Contracts;
 using System.IO;
+using System.Data.Entity;
 
 namespace WebShop.WebUI.Controllers
 {
@@ -34,7 +35,7 @@ namespace WebShop.WebUI.Controllers
             var viewModel = new ProductManagerViewModel()
             {
                 Product = new Product(),
-                ProductCategories = productCategories.Collection()
+                ProductCategories = productCategories.Collection().Where(c => c.ParentId == null).Include(c => c.Children).ToList()
             };
             
             return View(viewModel);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,11 @@ namespace WebShop.Core.Models
     {
 
         public string Category { get; set; }
+        
+        public string ParentId { get; set; }
+        [ForeignKey("ParentId")]
+        public virtual ICollection<ProductCategory> Children { get; set; }
 
-        public string ParentCategory { get; set; }
 
         
     }

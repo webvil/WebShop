@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,6 +72,10 @@
     <Compile Include="Migrations\202101190948146_delete.cs" />
     <Compile Include="Migrations\202101190948146_delete.designer.cs">
       <DependentUpon>202101190948146_delete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101200341564_SelfReferencingProductCategory.cs" />
+    <Compile Include="Migrations\202101200341564_SelfReferencingProductCategory.designer.cs">
+      <DependentUpon>202101200341564_SelfReferencingProductCategory.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101190948146_delete.resx">
       <DependentUpon>202101190948146_delete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101200341564_SelfReferencingProductCategory.resx">
+      <DependentUpon>202101200341564_SelfReferencingProductCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
