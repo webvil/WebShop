@@ -10,13 +10,20 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.ParentCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ParentCategory, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.DropDownListFor(model => model.ParentCategory, new SelectList(ViewBag.ParentCategories, "ParentCategory"), htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ParentCategory, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })
+            <select name="Product.ParentId" class="form-control">
+                <option value="">Select a parent category</option>
+                @foreach(var p in ViewBag.ParentCategories)
+                {
+                    <option value="@p.Id">@p.Category</option>
+                }
+            </select>
+           @* @Html.DropDownListFor(model => model.ParentId, new SelectList(ViewBag.ParentCategories, "Id", "Category"), htmlAttributes: new { @class = "form-control" })*@
+            @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>  
     <div class="form-group">
         @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

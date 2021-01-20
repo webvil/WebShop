@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Product.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Product.Description, htmlAttributes: new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,8 +29,20 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Product.Category, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                
-                @Html.DropDownListFor(model => model.Product.Category, new SelectList(Model.ProductCategories, "Category", "Category","ParentCategory",1), htmlAttributes: new { @class = "form-control" })
+                <select name="Product.Category" class="form-control">
+                    @foreach (var cat in Model.ProductCategories)
+                    {
+                        <optgroup label="@cat.Category">
+                            @foreach(var child in cat.Children)
+                            {
+                                <option value="@child.Category">@child.Category</option>
+                            }
+                        </optgroup>
+                    }
+                </select>
+
+                @*@Html.DropDownListFor(model => model.Product.Category, new SelectList(Model.ProductCategories, "Id", "ParentId","Category",1), htmlAttributes: new { @class = "form-control" })*@
+
                 @Html.ValidationMessageFor(model => model.Product.Category, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -8,14 +8,38 @@
 
     <div class="row">
         <div class="col-md-2">
-            
-            <ul class="list-group mt-4">
-                @Html.ActionLink("All", "Index", null, new { @class = Request["Category"] == null ? "list-group-item active" : "list-group-item" })
+
+
+
+            <div class="accordion mt-4" id="accordionExample">
                 @foreach (var cat in Model.ProductCategories)
                 {
-                    @Html.ActionLink(cat.Category, "Index", new { Category = cat.Category }, new { @class = Request["Category"] == cat.Category ? "list-group-item active" : "list-group-item" })
+                    <div class="card">
+                        <div class="card-header" id="heading-@cat.Id">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-@cat.Id" aria-expanded="true" aria-controls="collapseOne">
+                                    @cat.Category
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapse-@cat.Id" class="collapse" aria-labelledby="heading-@cat.Id" data-parent="#accordionExample">
+                            <ul class="list-group ml-4">
+                                @Html.ActionLink("All", "Index", new { Category = cat.Category }, new { @class = Request["Category"] == cat.Category ? "list-group-item active" : "list-group-item" })
+                                @foreach (var child in cat.Children)
+                                {
+                                    @Html.ActionLink(child.Category, "Index", new { Category = child.Category }, new { @class = Request["Category"] == child.Category ? "list-group-item active" : "list-group-item" })
+                                }
+
+                            </ul>
+                        </div>
+
+                    </div>
                 }
-            </ul>
+                <script>
+
+                </script>
+            </div>
 
         </div>
         <div class="col-md-10">
@@ -68,13 +92,24 @@
                                 <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                                 <a href="@Url.Action("AddToBasket", "Basket" , new { Id=item.Id })" class="btn btn-default">Add to basket</a>
                             </div>
-                    </div>
                         </div>
-              
+                    </div>
 
 
-            }
+
+                }
             </div>
         </div>
     </div>
 </div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var allLinks = $('.list-group a').map(function () {
+                return $(this).attr('href');
+            }).get();
+            console.log(allLinks);
+        })
+    </script>
+}

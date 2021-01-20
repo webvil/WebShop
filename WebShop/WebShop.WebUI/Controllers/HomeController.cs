@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -29,13 +30,18 @@ namespace WebShop.WebUI.Controllers
             }
             else
             {
+                
                 products = context.Collection().Where(p => p.Category == Category).ToList();
             }
             var model = new ProductListViewModel
             {
                 Products = products,
-                ProductCategories = productCategories.Collection().ToList()
+                ProductCategories = productCategories.Collection().Where(c => c.ParentId == null)
+                .Include(c => c.Children).ToList()
+                //var categories = Collection().Where(c => c.ParentId == null).Include(c => c.Children).ToList();
             };
+            //.ToList()
+        
 
             return View(model);
         }
