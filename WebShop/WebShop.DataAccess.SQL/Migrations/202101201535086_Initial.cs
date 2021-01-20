@@ -36,9 +36,12 @@
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Category = c.String(),
+                        ParentId = c.String(maxLength: 128),
                         CreatedAt = c.DateTimeOffset(nullable: false, precision: 7),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ProductCategories", t => t.ParentId)
+                .Index(t => t.ParentId);
             
             CreateTable(
                 "dbo.Products",
@@ -48,6 +51,7 @@
                         Name = c.String(maxLength: 20),
                         Description = c.String(),
                         Category = c.String(),
+                        Brand = c.String(),
                         Image = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         CreatedAt = c.DateTimeOffset(nullable: false, precision: 7),
@@ -72,8 +76,10 @@
         public override void Down()
         {
             DropForeignKey("dbo.ShoppingCartItems", "Product_Id", "dbo.Products");
+            DropForeignKey("dbo.ProductCategories", "ParentId", "dbo.ProductCategories");
             DropForeignKey("dbo.BasketItems", "BasketId", "dbo.Baskets");
             DropIndex("dbo.ShoppingCartItems", new[] { "Product_Id" });
+            DropIndex("dbo.ProductCategories", new[] { "ParentId" });
             DropIndex("dbo.BasketItems", new[] { "BasketId" });
             DropTable("dbo.ShoppingCartItems");
             DropTable("dbo.Products");
