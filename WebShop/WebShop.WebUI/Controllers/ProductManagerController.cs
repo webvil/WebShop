@@ -143,6 +143,17 @@ namespace WebShop.WebUI.Controllers
             }
 
         }
-           
+        public ActionResult Details(string Id)
+        {
+            Session["details"] = "hello session";
+            Product product = context.Find(Id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Details", "Home", product);
+            
+        }
+
     }
 }
