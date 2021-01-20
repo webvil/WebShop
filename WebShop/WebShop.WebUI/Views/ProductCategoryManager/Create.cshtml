@@ -1,10 +1,10 @@
 ﻿@model WebShop.Core.Models.ProductCategory
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>ProductCategory</h4>
     <hr />
@@ -13,7 +13,7 @@
         @Html.LabelFor(model => model.ParentCategory, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.ParentCategory, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.DropDownListFor(model => model.ParentCategory, new SelectList(ViewBag.ParentCategories, "ParentCategory"), htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.ParentCategory, new SelectList(ViewBag.ParentCategories, "ParentCategory"), htmlAttributes: new { id = "ParentCategories", @class = "selectCountry show-tick form-control" })
             @Html.ValidationMessageFor(model => model.ParentCategory, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -25,12 +25,33 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+    <h3>New test</h3>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="input-group dropdown">
+                <input type="text" class="form-control countrycode dropdown-toggle" value="(+47)">
+                <ul class="dropdown-menu">
+                    <li>Norway (+47)</li>
+                    <li>USA (+1)</li>
+                    <li>Japan (+55)</li>
+                </ul>
+                <span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" value="23456789" id="phone1">
         </div>
     </div>
-</div>
+    
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    // <a href="~/Views/ProductCategoryManager/Create.cshtml">~/Views/ProductCategoryManager/Create.cshtml</a>
 }
 
 <div>
@@ -39,4 +60,11 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    @*Scripts*@
+    @Scripts.Render("~/bundles/bootstrap-select")
+
+    @*Styles*@
+    @Styles.Render("~/Content/Bootstrap-Select/css")
 }
+
