@@ -51,6 +51,8 @@ namespace WebShop.WebUI.Controllers
         public ActionResult Edit(string Id)
         {
             ProductCategory productCategory = context.Find(Id);
+            var parentCategories = context.Collection().Where(c => c.ParentId == null).ToList();
+            ViewBag.ParentCategories = parentCategories;
             if (productCategory == null)
             {
                 return HttpNotFound();

@@ -7,13 +7,13 @@ namespace WebShop.DataAccess.SQL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class delete : IMigrationMetadata
+    public sealed partial class AddCategoryProductRelation : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(delete));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCategoryProductRelation));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101190948146_delete"; }
+            get { return "202101210535084_AddCategoryProductRelation"; }
         }
         
         string IMigrationMetadata.Source
