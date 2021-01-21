@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebShop.Core.Contracts;
 using WebShop.Core.Models;
@@ -30,18 +29,26 @@ namespace WebShop.WebUI.Controllers
             }
             else
             {
-                
-                products = context.Collection().Where(p => p.Category == Category).ToList();
+                products = context.Collection().ToList();
+                //products = context.Collection().Where(p => p.ProductCategoryId == Category).ToList();
             }
-            var model = new ProductListViewModel
-            {
-                Products = products,
-                ProductCategories = productCategories.Collection().Where(c => c.ParentId == null)
-                .Include(c => c.Children).ToList()
-                //var categories = Collection().Where(c => c.ParentId == null).Include(c => c.Children).ToList();
-            };
-            //.ToList()
-        
+                        
+                         var model =  new ProductListViewModel()
+                         {
+                             Products = products,
+                             ProductCategories = productCategories.Collection().Where(c => c.ParentId == null)
+                                .Include(c => c.Children).ToList()
+
+                         };
+
+
+
+
+           
+
+
+
+
 
             return View(model);
         }

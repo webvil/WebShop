@@ -105,7 +105,7 @@ namespace WebShop.WebUI.Controllers
                     files.SaveAs(path);
                     productToEdit.Image = fileName;
                 }
-                productToEdit.Category = product.Category;
+                productToEdit.Category.Category = product.Category.Category;
                 productToEdit.Description = product.Description;
                 productToEdit.Price = product.Price;
                 productToEdit.Name = product.Name;

@@ -17,18 +17,18 @@
                     <div class="card">
                         <div class="card-header" id="heading-@cat.Id">
                             <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-@cat.Id" aria-expanded="true" aria-controls="collapseOne">
+                                <button class="btn btn-link btn-block text-left text-decoration-none" type="button" data-toggle="collapse" data-target="#collapse-@cat.Id" aria-expanded="true" aria-controls="collapseOne">
                                     @cat.Category
                                 </button>
                             </h2>
                         </div>
 
                         <div id="collapse-@cat.Id" class="collapse" aria-labelledby="heading-@cat.Id" data-parent="#accordionExample">
-                            <ul class="list-group ml-4">
-                                @Html.ActionLink("All", "Index", new { Category = cat.Category }, new { @class = Request["Category"] == cat.Category ? "list-group-item active" : "list-group-item" })
+                            <ul class="list-group text-center">
+                                @Html.ActionLink("All", "Index", new { Category = cat.Category }, new { @class = Request["Category"] == cat.Category ? "list-group-item active bg-info" : "list-group-item" })
                                 @foreach (var child in cat.Children)
                                 {
-                                    @Html.ActionLink(child.Category, "Index", new { Category = child.Category }, new { @class = Request["Category"] == child.Category ? "list-group-item active" : "list-group-item" })
+                                    @Html.ActionLink(child.Category, "Index", new { Category = child.Category }, new { @class = Request["Category"] == child.Category ? "list-group-item active bg-info" : "list-group-item" })
                                 }
 
                             </ul>
@@ -106,10 +106,8 @@
 {
     <script>
         $(document).ready(function () {
-            var allLinks = $('.list-group a').map(function () {
-                return $(this).attr('href');
-            }).get();
-            console.log(allLinks);
+           
+            $("a.list-group-item.active").parent().parent().addClass("show");
         })
     </script>
 }
