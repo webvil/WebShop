@@ -13,6 +13,7 @@ namespace WebShop.Core.Models
         public string Category { get; set; }
         
         public string ParentId { get; set; }
+        public virtual ProductCategory Parent { get; set; }
         [ForeignKey("ParentId")]
         public virtual ICollection<ProductCategory> Children { get; set; }
         [ForeignKey("ProductCategoryId")]

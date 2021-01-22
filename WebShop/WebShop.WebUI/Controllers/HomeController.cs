@@ -19,32 +19,68 @@ namespace WebShop.WebUI.Controllers
             context = productContext;
             this.productCategories = productCategories;
         }
-        public ActionResult Index(string Category = null)
+        public ActionResult Index(string Category = null, string MainCategory = null)
         {
             List<Product> products;
 
-            if (Category == null)
+            if (Category != null)
             {
-                products = context.Collection().ToList();
+                products = context.Collection().Where(p => p.Category.Category == Category).ToList();
             }
             else
             {
-                products = context.Collection().ToList();
-                //products = context.Collection().Where(p => p.ProductCategoryId == Category).ToList();
+                if (MainCategory != null)
+                {
+                    products = context.Collection().Where(p => p.Category.Parent.Category == MainCategory).ToList();
+                }
+                else
+                {
+                    products = context.Collection().ToList();
+                }
             }
-                        
-                         var model =  new ProductListViewModel()
-                         {
-                             Products = products,
-                             ProductCategories = productCategories.Collection().Where(c => c.ParentId == null)
-                                .Include(c => c.Children).ToList()
-
-                         };
-
-
-
 
            
+
+            /* var categories = (from cat in productCategories.Collection().ToList()
+                               join child in 
+                               on cat.Id equals child.ParentId
+                               join prod in context.Collection()
+                               on cat.Id equals prod.ProductCategoryId
+                               where cat.ParentId == null).ToList();*/
+            var cats = new List<ProductCategory>();
+            foreach (var cat in productCategories.Collection().ToList())
+            {
+                foreach (var child in cat.Children)
+                {
+                    if (child.Products.Count > 0)
+                    {
+                       
+                        cats.Add(cat);
+                        break;
+                    }
+                    
+                }
+            }
+           // var categories = productCategories.Collection()
+           // .Where(c => c.ParentId == null)
+            
+           // .Include(c => c.Children)
+           
+            
+           // .ToList();
+
+
+
+            ProductListViewModel model = new ProductListViewModel()
+            {
+                Products = products,
+                ProductCategories = cats
+
+            };
+
+
+
+
 
 
 
