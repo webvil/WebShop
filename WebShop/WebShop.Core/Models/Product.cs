@@ -30,5 +30,6 @@ namespace WebShop.Core.Models
         {
             get; set;
         }
+        public virtual ICollection<ProductOnSale> ProductsOnSale { get; set; }
     }
 }

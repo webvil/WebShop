@@ -373,6 +373,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_LayoutNew.cshtml" />
     <Content Include="Views\Basket\Checkout.cshtml" />
+    <Content Include="Views\ProductManager\Sale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
