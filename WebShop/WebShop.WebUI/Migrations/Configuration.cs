@@ -1,18 +1,18 @@
-﻿namespace WebShop.DataAccess.SQL.Migrations
+﻿namespace WebShop.WebUI.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WebShop.DataAccess.SQL.DataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<WebShop.WebUI.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(WebShop.DataAccess.SQL.DataContext context)
+        protected override void Seed(WebShop.WebUI.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
