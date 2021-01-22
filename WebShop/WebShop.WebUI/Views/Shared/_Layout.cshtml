@@ -22,9 +22,12 @@
             @{
                 Html.RenderAction("BasketSummary", "Basket");
             }
+
+
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="#" class="nav-link">Register</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+                @*<li class="nav-item"><a href="#" class="nav-link">Register</a></li>
+            <li class="nav-item"><a href="/account/login" class="nav-link">Login</a></li>*@
+
                 <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="/Home/Contact" class="nav-link">Contact</a></li>
                 <li class="nav-item dropdown">
@@ -40,6 +43,7 @@
 
 
             </ul>
+            @Html.Partial("_LoginPartial");
 
         </div>
         </div>
