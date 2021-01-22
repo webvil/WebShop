@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using WebShop.Core.Contracts;
 using WebShop.Core.Models;
 using WebShop.DataAccess.InMemory;
@@ -89,32 +90,38 @@ namespace WebShop.WebUI.Controllers
 
         public ActionResult Delete(string Id)
         {
+            List<ProductCategory> productCategories = context.Collection().Where(a => a.ParentId == Id).ToList();
             ProductCategory productCategoryToDelete = context.Find(Id);
             if (productCategoryToDelete == null)
             {
                 return HttpNotFound();
             }
-            else
+            if (productCategories.Any())
             {
-                return View(productCategoryToDelete);
+                ViewBag.Message = "Cannot delete parent category";
+               
             }
+            return View(productCategoryToDelete);
+
 
         }
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult ConfirmDelete(string Id)
         {
+            
             ProductCategory productCategoryToDelete = context.Find(Id);
             if (productCategoryToDelete == null)
             {
                 return HttpNotFound();
             }
-            else
-            {
-                context.Delete(Id);
+
+              context.Delete(Id);
                 context.Commit();
-                return RedirectToAction("Index");
-            }
+          
+            
+            
+            return RedirectToAction("Index");
 
         }
 

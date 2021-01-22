@@ -4,23 +4,39 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th></th>
-    </tr>
+    
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var p in Model)
+    {
+        if (p.ParentId == null)
+        { 
+        <tr>
+            <td style="color:darkred">
+                @Html.DisplayFor(modelItem => p.Category)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = p.Id })
+            </td>
+        </tr>
+        
+
+        foreach (var sub in Model.Where(a=> a.ParentId == p.Id))
+        {
+           
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => sub.Category)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = sub.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = sub.Id })
+                </td>
+            </tr>
+             
+        }
+
+        }
+    }
 
 </table>

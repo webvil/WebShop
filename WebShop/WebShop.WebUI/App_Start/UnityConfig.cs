@@ -1,11 +1,16 @@
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 
 using Unity;
+using Unity.Injection;
 using WebShop.Core.Contracts;
 using WebShop.Core.Models;
 using WebShop.DataAccess.InMemory;
 using WebShop.DataAccess.SQL;
 using WebShop.Services;
+using WebShop.WebUI.Controllers;
+using WebShop.WebUI.Models;
 
 namespace WebShop.WebUI
 {
@@ -52,6 +57,13 @@ namespace WebShop.WebUI
             container.RegisterType<IRepository<Basket>, SqlRepository<Basket>>();
             container.RegisterType<IRepository<BasketItem>, SqlRepository<BasketItem>>();
             container.RegisterType<IBasketService, BasketService>();
+
+
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            container.RegisterType<UserManager<ApplicationUser>>();
+            container.RegisterType<ApplicationUserManager>();
+            container.RegisterType<AccountController>(new InjectionConstructor());
+            container.RegisterType<ManageController>(new InjectionConstructor());
         }
 
        
