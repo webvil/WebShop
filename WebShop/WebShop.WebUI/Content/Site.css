@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 60px;
+    padding-top: 80px;
     padding-bottom: 20px;
 }
 
@@ -22,3 +22,15 @@ select,
 textarea {
     max-width: 280px;
 }
+
+ul.navbar-nav li a {
+    color: white;
+}
+
+ul.navbar-nav li {
+    padding: 10px;
+}
+
+ul.navbar-nav.ml-auto li a {
+        color: #17a2b8;
+    }
