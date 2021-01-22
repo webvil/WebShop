@@ -156,8 +156,8 @@ namespace WebShop.WebUI.Controllers
         }
         public ActionResult Sale()
         {
-            var products = from var p in context.Collection()
-                           left join var d in 
+           /* var products = from var p in context.Collection()
+                           left join var d in */
             return View();
         }
 
