@@ -154,6 +154,12 @@ namespace WebShop.WebUI.Controllers
             return RedirectToAction("Details", "Home", product);
             
         }
+        public ActionResult Sale()
+        {
+            var products = from var p in context.Collection()
+                           left join var d in 
+            return View();
+        }
 
     }
 }

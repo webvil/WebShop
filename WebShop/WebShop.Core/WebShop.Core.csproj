@@ -53,6 +53,7 @@
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Basket.cs" />
     <Compile Include="Models\BasketItem.cs" />
+    <Compile Include="Models\ProductOnSale.cs" />
     <Compile Include="ViewModels\MainCategoryViewModel.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
