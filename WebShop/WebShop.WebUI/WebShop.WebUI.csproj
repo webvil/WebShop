@@ -374,6 +374,13 @@
     <Content Include="Views\Shared\_LayoutNew.cshtml" />
     <Content Include="Views\Basket\Checkout.cshtml" />
     <Content Include="Views\ProductManager\Sale.cshtml" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
