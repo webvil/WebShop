@@ -53,13 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\202101201010401_new.cs" />
-    <Compile Include="Migrations\202101201010401_new.designer.cs">
-      <DependentUpon>202101201010401_new.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101210535084_AddCategoryProductRelation.cs" />
-    <Compile Include="Migrations\202101210535084_AddCategoryProductRelation.designer.cs">
-      <DependentUpon>202101210535084_AddCategoryProductRelation.cs</DependentUpon>
+    <Compile Include="Migrations\202101211313131_Initial.cs" />
+    <Compile Include="Migrations\202101211313131_Initial.designer.cs">
+      <DependentUpon>202101211313131_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,11 +72,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101201010401_new.resx">
-      <DependentUpon>202101201010401_new.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101210535084_AddCategoryProductRelation.resx">
-      <DependentUpon>202101210535084_AddCategoryProductRelation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101211313131_Initial.resx">
+      <DependentUpon>202101211313131_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

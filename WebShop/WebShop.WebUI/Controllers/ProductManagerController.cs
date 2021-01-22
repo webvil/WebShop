@@ -30,15 +30,14 @@ namespace WebShop.WebUI.Controllers
             return View(products) ;
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
-            var viewModel = new ProductManagerViewModel()
-            {
-                Product = new Product(),
-                ProductCategories = productCategories.Collection().Where(c => c.ParentId == null).Include(c => c.Children).ToList()
-            };
-            
-            return View(viewModel);
+            ViewBag.ProductCategories = productCategories.Collection().Where(c => c.ParentId == null)
+                .Include(c => c.Children)
+                .Where(c => c.Children.Count > 0).ToList();
+            var product = new Product();
+            return View(product);
         }
         [HttpPost]
         public ActionResult Create(Product product, HttpPostedFileBase files)

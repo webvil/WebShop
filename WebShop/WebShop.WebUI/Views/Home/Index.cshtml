@@ -8,9 +8,6 @@
 
     <div class="row">
         <div class="col-md-2">
-
-
-
             <div class="accordion mt-4" id="accordionExample">
                 @foreach (var cat in Model.ProductCategories)
                 {
@@ -22,25 +19,35 @@
                                 </button>
                             </h2>
                         </div>
-
                         <div id="collapse-@cat.Id" class="collapse" aria-labelledby="heading-@cat.Id" data-parent="#accordionExample">
-                            <ul class="list-group text-center">
-                                @Html.ActionLink("All", "Index", new { Category = cat.Category }, new { @class = Request["Category"] == cat.Category ? "list-group-item active bg-info" : "list-group-item" })
+                            <ul class="list-group">
+                                @Html.ActionLink("All", "Index", new { MainCategory = cat.Category }, new { @class = Request["MainCategory"] == cat.Category ? "list-group-item bg-info text-white text-center" : "list-group-item text-center" })
                                 @foreach (var child in cat.Children)
                                 {
-                                    @Html.ActionLink(child.Category, "Index", new { Category = child.Category }, new { @class = Request["Category"] == child.Category ? "list-group-item active bg-info" : "list-group-item" })
+
+                                    if (child.Products.Count > 0)
+                                    {
+
+                                        string c = Request["Category"] == child.Category ? "list-group-item bg-info text-white" : "list-group-item";
+                                
+
+                                    <a href="@Url.Action("Index", "Home", new { Category = child.Category })" class="@c pl-3 d-flex flex-row justify-content-around">
+                                        <small>@child.Category</small>
+                                        <span class="badge badge-light">@child.Products.Count</span>
+                                    </a>
+                                    
+                                      
+                                    }
+
                                 }
 
                             </ul>
                         </div>
-
                     </div>
                 }
                 <script>
-
                 </script>
             </div>
-
         </div>
         <div class="col-md-10">
             <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
@@ -70,33 +77,30 @@
                 </a>
             </div>
             <div class="row">
-
-
                 @foreach (var item in Model.Products)
                 {
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
                             <img class="card-img-top" src="~/Content/img/products/@item.Image" alt="Alternate Text" />
                             <div class="card-body">
-                                <h4 class="card-title">
+                                <h5 class="card-title">
                                     @Html.ActionLink(item.Name, "Details", new { id = item.Id })
-                                </h4>
-                                <h5>$@item.Price</h5>
+                                </h5>
+                                <p class="text-info">$@item.Price</p>
                                 <p class="card-text">
                                     @item.Description
 
 
                                 </p>
                             </div>
-                            <div class="card-footer">
-                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                                <a href="@Url.Action("AddToBasket", "Basket" , new { Id=item.Id })" class="btn btn-default">Add to basket</a>
+                            <div class="card-footer d-flex justify-content-between">
+                                
+                                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                
+                                <a href="@Url.Action("AddToBasket", "Basket" , new { Id=item.Id })" class="btn btn-info">Add</a>
                             </div>
                         </div>
                     </div>
-
-
-
                 }
             </div>
         </div>
@@ -107,7 +111,7 @@
     <script>
         $(document).ready(function () {
            
-            $("a.list-group-item.active").parent().parent().addClass("show");
+            $("a.list-group-item.bg-info").parent().parent().addClass("show");
         })
     </script>
 }
