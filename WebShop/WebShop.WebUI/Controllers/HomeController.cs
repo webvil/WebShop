@@ -41,8 +41,7 @@ namespace WebShop.WebUI.Controllers
                 //var categories = Collection().Where(c => c.ParentId == null).Include(c => c.Children).ToList();
             };
             //.ToList()
-        
-
+            
             return View(model);
         }
 
