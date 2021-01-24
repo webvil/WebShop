@@ -83,7 +83,7 @@ namespace WebShop.WebUI.Controllers
             
         }
         [HttpPost]
-        public ActionResult Edit(Product product, string Id, HttpPostedFileBase files)
+        public ActionResult Edit(ProductManagerViewModel viewModel, string Id, HttpPostedFileBase files)
         {
             Product productToEdit = context.Find(Id);
             if (productToEdit == null)
@@ -95,7 +95,7 @@ namespace WebShop.WebUI.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(product);
+                    return View(viewModel);
                 }
                 if (files != null && files.ContentLength > 0)
                 {
@@ -104,10 +104,11 @@ namespace WebShop.WebUI.Controllers
                     files.SaveAs(path);
                     productToEdit.Image = fileName;
                 }
-                productToEdit.Category.Category = product.Category.Category;
-                productToEdit.Description = product.Description;
-                productToEdit.Price = product.Price;
-                productToEdit.Name = product.Name;
+                productToEdit.Category.Category = viewModel.Product.Category.Category;
+                productToEdit.Description = viewModel.Product.Description;
+                productToEdit.Price = viewModel.Product.Price;
+                productToEdit.Name = viewModel.Product.Name;
+                productToEdit.Brand = viewModel.Product.Brand;
                 context.Commit();
                 return RedirectToAction("Index");
             }
