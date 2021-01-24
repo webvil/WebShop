@@ -11,10 +11,10 @@ namespace WebShop.Core.ViewModels
     {
         public Product Product { get; set; }
         public ProductOnSale Sale { get; set; }
-        /* public string Id { get; set; }
-         public decimal Discount { get; set; }
-         public DateTimeOffset Start { get; set; }
-         public DateTimeOffset End { get; set; }*/
+      /*  public string Id { get; set; }
+        public decimal Discount { get; set; }
+        public DateTimeOffset Start { get; set; }
+        public DateTimeOffset End { get; set; }*/
 
     }
 }

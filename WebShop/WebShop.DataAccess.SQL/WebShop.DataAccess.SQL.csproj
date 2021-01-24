@@ -52,19 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="partialDataConext.cs" />
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\202101230026289_Initial.cs" />
-    <Compile Include="Migrations\202101230026289_Initial.designer.cs">
-      <DependentUpon>202101230026289_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101231625257_AddForeignKeyProduct_ProductOnSale.cs" />
-    <Compile Include="Migrations\202101231625257_AddForeignKeyProduct_ProductOnSale.designer.cs">
-      <DependentUpon>202101231625257_AddForeignKeyProduct_ProductOnSale.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202101231639226_ProductsProductsOnSaleCollection.cs" />
-    <Compile Include="Migrations\202101231639226_ProductsProductsOnSaleCollection.designer.cs">
-      <DependentUpon>202101231639226_ProductsProductsOnSaleCollection.cs</DependentUpon>
+    <Compile Include="Migrations\202101240929362_Initial.cs" />
+    <Compile Include="Migrations\202101240929362_Initial.designer.cs">
+      <DependentUpon>202101240929362_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,14 +72,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101230026289_Initial.resx">
-      <DependentUpon>202101230026289_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101231625257_AddForeignKeyProduct_ProductOnSale.resx">
-      <DependentUpon>202101231625257_AddForeignKeyProduct_ProductOnSale.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202101231639226_ProductsProductsOnSaleCollection.resx">
-      <DependentUpon>202101231639226_ProductsProductsOnSaleCollection.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101240929362_Initial.resx">
+      <DependentUpon>202101240929362_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,10 +13,9 @@ namespace WebShop.Core.Models
     {
        
         public string ProductId { get; set; }
-        public decimal Discount { get; set; }
+        public decimal? Discount { get; set; }
         public DateTimeOffset Start { get; set; }
         public DateTimeOffset End { get; set; }
-        [Required]
         public virtual Product Product { get; set; }
     }
 }

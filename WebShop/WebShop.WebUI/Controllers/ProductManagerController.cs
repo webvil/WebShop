@@ -38,12 +38,12 @@ namespace WebShop.WebUI.Controllers
                                      from subnet in x.DefaultIfEmpty()
                                      select new ProductListViewModel 
                                      { 
-                                         Product = p, 
+                                         Product = p,
                                          Sale = subnet ?? new ProductOnSale()
                                          /*Id = subnet?.Id ?? String.Empty,
-                                         Discount = subnet?.Discount ?? 0,
-                                         Start = subnet?.Start ?? default(DateTimeOffset),
-                                         End = subnet?.Start ?? default(DateTimeOffset)*/
+                                         Discount = (decimal)(subnet?.Discount),
+                                         Start = (DateTimeOffset)subnet?.Start,
+                                         End = (DateTimeOffset)subnet?.Start */
 
                                      }).ToList();
 
@@ -175,31 +175,38 @@ namespace WebShop.WebUI.Controllers
             
         }
         [HttpPost]
-        public ActionResult Sale(ProductOnSale p)
+        public ActionResult AddToSale(ProductOnSale p)
         {
 
             var productOnSale = productsOnSale.Find(p.Id);
             if (productOnSale == null) // new record
             {
-                
-
+                if (!ModelState.IsValid)
+                {
+                    return HttpNotFound();
+                    //return RedirectToAction("Index");
+                }
+                else
+                {
 
                     var newSale = new ProductOnSale
                     {
-                        
+
                         ProductId = p.ProductId,
-                        Discount = p.Discount ,
+                        Discount = p.Discount,
                         Start = p.Start,
                         End = p.End
-                    }; 
+                    };
                     productsOnSale.Insert(newSale);
                     productsOnSale.Commit();
                     return RedirectToAction("Index");
 
-                
+                }
             }
             else // Update
             {
+                //return HttpNotFound();
+                productOnSale.ProductId = p.ProductId;
                 productOnSale.Discount = p.Discount;
                 productOnSale.Start = p.Start;
                 productOnSale.End = p.End;
@@ -207,6 +214,20 @@ namespace WebShop.WebUI.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
+        public ActionResult RemoveFromSale(string Id)
+        {
+            var productToRemove = productsOnSale.Find(Id);
+            if (productToRemove == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                productsOnSale.Delete(Id);
+                productsOnSale.Commit();
+                return RedirectToAction("Index");
+            }
         }
 
     }

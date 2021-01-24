@@ -3,9 +3,7 @@
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Data.Entity.Validation;
     using System.Linq;
-    using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WebShop.DataAccess.SQL.DataContext>
     {
@@ -20,9 +18,6 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-
-
         }
-        
     }
 }

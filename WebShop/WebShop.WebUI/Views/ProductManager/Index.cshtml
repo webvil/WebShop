@@ -39,57 +39,111 @@
         </th>
     </tr>
 
-
+    
     @foreach (var item in Model)
     {
+        bool OnSale = item.Sale.Discount != null ? true : false;
+        var tdBackground = OnSale && item.Sale.Discount > 0 ? "bg-danger" : "bg-default";
+<form action="/ProductManager/AddToSale" method="post">
+    <tr>
+        <td>
+            <img src="~/Content/img/products/@item.Product.Image" alt="Alternate Text" width="80" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Category.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Price)
+        </td>
+        <td class="@tdBackground text-white">
 
-        var tdBackground = item.Sale != null && item.Sale.Discount > 0 ? "bg-danger" : "bg-default";
-        
-<tr>
-    <td>
-        <img src="~/Content/img/products/@item.Product.Image" alt="Alternate Text" width="80" />
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Product.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Product.Description)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Product.Category.Category)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Product.Price)
-    </td>
-    <td class="@tdBackground text-white">
+            @String.Format("{0:c}", !OnSale ? item.Product.Price : item.Product.Price * (100 - item.Sale.Discount) / 100)
+        </td>
 
-        @String.Format("{0:c}", item.Sale == null ? item.Product.Price : item.Product.Price * (item.Sale.Discount / 100))
-    </td>
-    <form action="/ProductManager/Sale" method="post">
         <td class="@tdBackground">
-            <input type="hidden" id="Product "name="Product" value="@item.Product.ToString()" />
             <input type="hidden" id="ProductId" name="ProductId" value="@item.Product.Id" />
             <input type="hidden" id="Id" name="Id" value="@item.Sale.Id" />
-            <input type="text" Id="Discount "name="Discount" value="@item.Sale.Discount" class="form-control form-control-sm" />
+            <input type="text" Id="Discount " name="Discount" value="@item.Sale.Discount" class="form-control form-control-sm" />
         </td>
         <td class="@tdBackground">
 
+        @{ 
+            var Start = OnSale ? item.Sale.Start.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd");
+            var End = OnSale ? item.Sale.End.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd");
+        }
+        <input type="date" id="Start" name="Start" value="@Start" class="form-control form-control-sm" />
+        </td>
+        <td class="@tdBackground">
+            <div class="form-group  d-flex flex-row justify-content-between">
+                <input type="date" id="End" name="End" value="@End" class="form-control form-control-sm" />
+                    <input type="submit" value="U" class="btn btn-sm btn-success" />
+                @if (item.Sale.Discount != null)
+                {
+                    <button type="button" class="btn btn-warning btn-sm" data-price="@item.Product.Price" data-discountPrice="" data-id="@item.Sale.Id" data-name="@item.Product.Name" data-toggle="modal" data-target="#deleteModal">D</button>
+                }
 
-            <input type="date" id="Start" name="Start" value="@item.Sale.Start.ToString("yyyy-MM-dd")" class="form-control form-control-sm" />
+            </div>
         </td>
-        <td class="@tdBackground d-flex flex-row justify-content-between">
-            <input type="date" id="End" name="End" value="@item.Sale.End.ToString("yyyy-MM-dd")" class="form-control form-control-sm" />
-            <button class="btn btn-sm btn-success">U</button>
-        </td>
-    </form>
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.Product.Id }) |
             @Html.ActionLink("Details", "Details", new { id = item.Product.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.Product.Id })
         </td>
-</tr>
-            
-       
+    </tr>
+</form>
+
     }
 
-    </table>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/ProductManager/RemoveFromSale" method="post">
+                <div class="modal-body">
+
+                    <input id="Id" name="Id" type="hidden" />
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" value="Confirm Delete" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id');
+            var name = button.data('name');
+            var price = button.data('price');
+            var discountPrice = button.data('discountPrice');
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + name)
+            modal.find('.modal-body input').val(id)
+        })
+    </script>
+}

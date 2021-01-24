@@ -40,7 +40,9 @@ namespace WebShop.DataAccess.SQL
                 dbSet.Attach(entity);
             }
             dbSet.Remove(entity);
-            
+            context.Entry(entity).State = EntityState.Deleted;
+
+
         }
 
         public T Find(string Id)

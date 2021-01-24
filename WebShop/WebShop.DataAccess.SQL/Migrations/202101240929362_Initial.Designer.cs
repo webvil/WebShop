@@ -7,13 +7,13 @@ namespace WebShop.DataAccess.SQL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddForeignKeyProduct_ProductOnSale : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddForeignKeyProduct_ProductOnSale));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101231625257_AddForeignKeyProduct_ProductOnSale"; }
+            get { return "202101240929362_Initial"; }
         }
         
         string IMigrationMetadata.Source
