@@ -9,7 +9,12 @@ namespace WebShop.Core.ViewModels
 {
     public class ProductListViewModel
     {
-        public IEnumerable<Product> Products { get; set; }
-        public IEnumerable<ProductCategory> ProductCategories { get; set; }
+        public Product Product { get; set; }
+        public ProductOnSale Sale { get; set; }
+        /* public string Id { get; set; }
+         public decimal Discount { get; set; }
+         public DateTimeOffset Start { get; set; }
+         public DateTimeOffset End { get; set; }*/
+
     }
 }

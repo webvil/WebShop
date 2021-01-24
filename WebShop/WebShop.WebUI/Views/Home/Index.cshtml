@@ -1,4 +1,4 @@
-﻿@model WebShop.Core.ViewModels.ProductListViewModel
+﻿@model IEnumerable<WebShop.Core.Models.Product>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-2">
             <div class="accordion mt-4" id="accordionExample">
-                @foreach (var cat in Model.ProductCategories)
+                @foreach (var cat in ViewBag.ProductCategories)
                 {
                     <div class="card">
                         <div class="card-header" id="heading-@cat.Id">
@@ -31,7 +31,7 @@
                                         string c = Request["Category"] == child.Category ? "list-group-item bg-info text-white" : "list-group-item";
                                 
 
-                                    <a href="@Url.Action("Index", "Home", new { Category = child.Category })" class="@c pl-3 d-flex flex-row justify-content-around">
+                                    <a href="@Url.Action("Index", "Home", new { Category = child.Category })" class="@c pl-3 d-flex flex-row justify-content-around text-decoration-none">
                                         <small>@child.Category</small>
                                         <span class="badge badge-light">@child.Products.Count</span>
                                     </a>
@@ -77,7 +77,7 @@
                 </a>
             </div>
             <div class="row">
-                @foreach (var item in Model.Products)
+                @foreach (var item in Model)
                 {
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
@@ -86,7 +86,20 @@
                                 <h5 class="card-title">
                                     @Html.ActionLink(item.Name, "Details", new { id = item.Id })
                                 </h5>
-                                <p class="text-info">$@item.Price</p>
+                                <div class="d-flex flex-row justify-content-between">
+
+
+                                    @if (item.SaleInfo.Count > 0)
+                                    {
+                                        <p class="text-info" style="text-decoration:line-through">$@item.Price</p>  
+                                        <p class="text-danger font-italic">@String.Format("{0:c}", (item.Price * item.SaleInfo.First().Discount / 100))</p>
+                                    }
+                                    else 
+                                    {
+                                        <p class="text-info">$@item.Price</p>    
+                                    }
+                                </div>
+                                
                                 <p class="card-text">
                                     @item.Description
 

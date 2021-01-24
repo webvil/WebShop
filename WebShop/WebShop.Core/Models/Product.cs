@@ -11,8 +11,6 @@ namespace WebShop.Core.Models
 {
     public class Product : BaseEntity
     {
-        
-        
         [StringLength(20)]
         [DisplayName("Product Name")]
         public string Name { get; set; }
@@ -26,10 +24,7 @@ namespace WebShop.Core.Models
         [Range(0, 1000)]
         public decimal Price { get; set; }
         [ForeignKey("Id")]
-        public virtual ProductCategory Category
-        {
-            get; set;
-        }
-        public virtual ICollection<ProductOnSale> ProductsOnSale { get; set; }
+        public virtual ProductCategory Category { get; set; }
+        public virtual ICollection<ProductOnSale> SaleInfo { get; set; }
     }
 }
