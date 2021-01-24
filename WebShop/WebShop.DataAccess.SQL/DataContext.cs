@@ -19,7 +19,8 @@ namespace WebShop.DataAccess.SQL
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
+        public DbSet<Contact> Contact  { get; set; }
 
-        
+
     }
 }
