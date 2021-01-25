@@ -8,7 +8,7 @@ namespace WebShop.Core.Models
 {
     public class OrderItem : BaseEntity
     {
-        public decimal OrderedAtPrice { get; set; }
+        public decimal OrderPrice { get; set; }
         public int Quantity { get; set; }
         public virtual Product Product { get; set; }
     }

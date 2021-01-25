@@ -11,39 +11,42 @@ namespace WebShop.WebUI.Controllers
     public class OrderController : Controller
     {
         IRepository<Order> context;
-        IRepository<OrderItem> orderItems;
+//IRepository<OrderItem> orderItems;
         IRepository<Product> products;
-        IBasketService basketService;
+        IRepository<BasketItem> basketItems;
         
-        public OrderController(IRepository<Order> context, IRepository<OrderItem> orderItems, IRepository<Product> products, IBasketService basketService)
+        public OrderController(IRepository<Order> context, IRepository<Product> products, IRepository<BasketItem> basketItems)
         {
             this.context = context;
-            this.orderItems = orderItems;
+            this.basketItems = basketItems;
             this.products = products;
-            this.basketService = basketService;
         }
         // GET: Order
         public ActionResult Index()
         {
-            var basketItems = basketService.GetBasketItems(this.HttpContext);
 
-            var model = (from p in this.products.Collection().ToList()
-                             join b in basketItems.ToList()
+            var orderItems = (from p in this.products.Collection().ToList()
+                             join b in basketItems.Collection()
                              on p.Id equals b.ProductId
                              select new OrderItem
                              {
-                                 OrderedAtPrice = ,
+                                 OrderPrice = 10,
                                  Quantity = b.Quantity,
                                  Product = p
                              }).ToList();
 
+            return View(orderItems);
+        }
+        [HttpPost]
+        public ActionResult Create()
+        {
+            var order = new Order
+            {
 
-            context.Insert(model);
-                orderItems.Insert(orderItem);
-            }
-            // we need the to create the OrderItems from basketitems
-            // and then create the order
-            return View();
+            };
+
+            context.Insert(order);
+            return HttpNotFound();
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web.Mvc;
 using WebShop.Core.Contracts;
 using WebShop.Core.Models;
-using WebShop.Core.ViewModels;
 
 namespace WebShop.WebUI.Controllers
 {
