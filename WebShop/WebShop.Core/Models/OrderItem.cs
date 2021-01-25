@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace WebShop.Core.Models
 {
-    public class OrderItem
+    public class OrderItem : BaseEntity
     {
+        public decimal OrderPrice { get; set; }
+        public int Quantity { get; set; }
+        public virtual Product Product { get; set; }
     }
 }
