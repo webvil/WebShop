@@ -231,5 +231,21 @@ namespace WebShop.WebUI.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Search(string searchString)
+        {
+
+
+            var det = context.Collection();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                det = det.Where(d => d.Name.ToUpper().Contains(searchString.ToUpper()) || d.Description.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            return View(det);
+        }
+
+
+
     }
 }
