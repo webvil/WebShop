@@ -29,12 +29,12 @@ namespace WebShop.WebUI.Controllers
             return View(contact);
         }
         [HttpPost]
-        public ActionResult Create(Contact contact, HttpPostedFileBase files)
+        public ActionResult Create(Contact contact)
         {
             if (!ModelState.IsValid)
             {
                
-                @ViewBag.Message = "failure";
+                TempData["MSG"] = "Oops! Some issue in getting the data.";
                 return View(contact);
             }
             else
@@ -42,10 +42,13 @@ namespace WebShop.WebUI.Controllers
 
                 context.Insert(contact);
                 context.Commit();
-                @ViewBag.Message = "Details added successfully";
-                return RedirectToAction("Index");
-                 
+                TempData["MSG"] = "Thanks for giving the information!.Will get in touch with you soon";
+                return RedirectToAction("Index", "Home", contact);
+              
+
             }
         }
+
+
     }
 }

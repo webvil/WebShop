@@ -10,6 +10,7 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "WebShop.DataAccess.SQL.DataContext";
         }
 
         protected override void Seed(WebShop.DataAccess.SQL.DataContext context)
