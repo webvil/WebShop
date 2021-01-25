@@ -1,7 +1,14 @@
 ﻿@{
     ViewBag.Title = "Checkout";
 }
-
+@if (User.Identity.IsAuthenticated)
+{
+    <h3>You are logged in</h3>
+    @*if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Admin", "AdminController")
+        }*@
+}
 <div class="row">
     <div class="col-md-4 order-md-2 mb-4">
         <h4 class="d-flex justify-content-between align-items-center mb-3">

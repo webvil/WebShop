@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace WebShop.Core.Models
 {
-    public class Order 
+    public class Order : BaseEntity
     {
-        public List<OrderItem> Items { get; set; }
+        public string ShippingAddress { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
 
     }
 }
