@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebShop.Core.Models.Product>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
+                <img class="card-img-top" src="~/Content/img/products/@item.Image" alt="Alternate Text" />
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                    </h5>
+                    <div class="d-flex flex-row justify-content-between">
+
+
+                        @if (item.SaleInfo.Count > 0)
+                        {
+                            <p class="text-info" style="text-decoration:line-through">$@item.Price</p>
+                            <p class="text-danger font-italic">@String.Format("{0:c}", (item.Price * item.SaleInfo.First().Discount / 100))</p>
+                        }
+                        else
+                        {
+                            <p class="text-info">$@item.Price</p>
+                        }
+                    </div>
+
+                    <p class="card-text">
+                        @item.Description
+
+
+                    </p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+
+                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+
+                    <a href="@Url.Action("AddToBasket", "Basket" , new { Id=item.Id })" class="btn btn-info">Add</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

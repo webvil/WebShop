@@ -382,6 +382,7 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\ProductManager\Sale.cshtml" />
     <Content Include="Web.config" />
+    <Content Include="Views\ProductManager\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
