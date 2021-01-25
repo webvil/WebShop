@@ -23,7 +23,8 @@ namespace WebShop.WebUI.Controllers
         }
         public ActionResult Checkout()
         {
-            return View();
+            var model = this.basketService.GetBasketItems(this.HttpContext);
+            return View(model);
         }
 
         public ActionResult AddToBasket(string Id)

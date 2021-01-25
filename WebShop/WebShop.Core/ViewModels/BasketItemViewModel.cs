@@ -14,7 +14,7 @@ namespace WebShop.Core.ViewModels
         public string ProductName { get; set; }
         public decimal Price { get; set; }
         public string Image { get; set; }
-
-
+        public decimal? DiscountRate { get; set; }
+        public decimal? DiscountPrice { get; set; }
     }
 }

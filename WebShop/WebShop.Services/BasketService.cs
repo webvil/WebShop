@@ -140,7 +140,9 @@ namespace WebShop.Services
                                    Quantity = b.Quantity,
                                    ProductName = p.Name,
                                    Image = p.Image,
-                                   Price = p.Price
+                                   Price = p.Price,
+                                   DiscountRate = p.SaleInfo.Count > 0 ? p.SaleInfo.First().Discount : decimal.Zero,
+                                   DiscountPrice = p.SaleInfo.Count > 0 ? p.Price * (100 - p.SaleInfo.First().Discount) / 100 : p.Price
                                }).ToList();
                 return results;
             }

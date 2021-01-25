@@ -23,6 +23,10 @@
         </th>
 
         <th>
+           Discounted Price
+        </th>
+
+        <th>
             Line Total
         </th>
         <th>
@@ -47,8 +51,10 @@
                 @String.Format("{0:c}", item.Price)
             </td>
             <td>
-                @String.Format("{0:c}", item.Price * item.Quantity)
+                @String.Format("{0:c}", item.DiscountPrice)
             </td>
+            <td>
+                @String.Format("{0:c}", item.DiscountRate == 0 ? item.Price * item.Quantity : item.DiscountPrice * item.Quantity)</td>
             <td>
                 <a href="@Url.Action("AddToBasket", "Basket", new { Id=item.Id })" class="btn btn-success">Add</a>
                 <a href="@Url.Action("RemoveFromBasket", "Basket", new { Id=item.Id })" class="btn btn-danger">Remove</a>
@@ -56,11 +62,13 @@
         </tr>
     }
     <tr>
-        <td colspan="4" class="text-right"><strong>Basket Total</strong></td>
-        <td>@String.Format("{0:c}", (from p in Model select p.Price * p.Quantity).Sum())</td>
+        <td colspan="5" class="text-right"><strong>Basket Total</strong></td>
+        <td>@String.Format("{0:c}", (from p in Model select (p.DiscountRate > 0 ? p.DiscountPrice : p.Price) * p.Quantity).Sum())</td>
+        <td></td>
     </tr>
+    
 
 
 </table>
 <hr class="mb-4">
-<a href="/Basket/Checkout" class="btn btn-primary btn-lg btn-block">Continue to checkout</a>
+<a href="/Basket/Checkout" class="btn btn-primary btn-lg btn-block">Continue to Payment</a>
