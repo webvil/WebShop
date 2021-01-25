@@ -9,25 +9,45 @@ using WebShop.Core.ViewModels;
 using WebShop.Core.Contracts;
 using System.IO;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Text;
 
 namespace WebShop.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
+        
         IRepository<Product> context;
         IRepository<ProductCategory> productCategories;
+        IRepository<ProductOnSale> productsOnSale;
         public ProductManagerController(IRepository<Product> productContext,
-            IRepository<ProductCategory> productCategories)
+            IRepository<ProductCategory> productCategories, IRepository<ProductOnSale> productsOnSale)
         {
             context = productContext;
             this.productCategories = productCategories;
+            this.productsOnSale = productsOnSale;
         }
         // GET: ProductManager
 
         public ActionResult Index()
         {
-            List<Product> products = context.Collection().ToList();
-            return View(products) ;
+            // make a ProductListViewModel
+            var model = (from p in context.Collection().ToList()
+                                     join s in productsOnSale.Collection()
+                                     on p.Id equals s.ProductId into x
+                                     from subnet in x.DefaultIfEmpty()
+                                     select new ProductListViewModel 
+                                     { 
+                                         Product = p,
+                                         Sale = subnet ?? new ProductOnSale()
+                                         /*Id = subnet?.Id ?? String.Empty,
+                                         Discount = (decimal)(subnet?.Discount),
+                                         Start = (DateTimeOffset)subnet?.Start,
+                                         End = (DateTimeOffset)subnet?.Start */
+
+                                     }).ToList();
+
+            return View(model) ;
         }
 
         [HttpGet]
@@ -38,7 +58,7 @@ namespace WebShop.WebUI.Controllers
                 .Where(c => c.Children.Count > 0).ToList();
             var product = new Product();
             return View(product);
-        }
+        } 
         [HttpPost]
         public ActionResult Create(Product product, HttpPostedFileBase files)
         {
@@ -155,11 +175,60 @@ namespace WebShop.WebUI.Controllers
             return RedirectToAction("Details", "Home", product);
             
         }
-        public ActionResult Sale()
+        [HttpPost]
+        public ActionResult AddToSale(ProductOnSale p)
         {
-           /* var products = from var p in context.Collection()
-                           left join var d in */
-            return View();
+
+            var productOnSale = productsOnSale.Find(p.Id);
+            if (productOnSale == null) // new record
+            {
+                if (!ModelState.IsValid)
+                {
+                    return HttpNotFound();
+                    //return RedirectToAction("Index");
+                }
+                else
+                {
+
+                    var newSale = new ProductOnSale
+                    {
+
+                        ProductId = p.ProductId,
+                        Discount = p.Discount,
+                        Start = p.Start,
+                        End = p.End
+                    };
+                    productsOnSale.Insert(newSale);
+                    productsOnSale.Commit();
+                    return RedirectToAction("Index");
+
+                }
+            }
+            else // Update
+            {
+                //return HttpNotFound();
+                productOnSale.ProductId = p.ProductId;
+                productOnSale.Discount = p.Discount;
+                productOnSale.Start = p.Start;
+                productOnSale.End = p.End;
+                productsOnSale.Commit();
+                return RedirectToAction("Index");
+            }
+
+        }
+        public ActionResult RemoveFromSale(string Id)
+        {
+            var productToRemove = productsOnSale.Find(Id);
+            if (productToRemove == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                productsOnSale.Delete(Id);
+                productsOnSale.Commit();
+                return RedirectToAction("Index");
+            }
         }
 
     }
