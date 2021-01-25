@@ -13,15 +13,23 @@ namespace WebShop.WebUI.Controllers
     {
         readonly IRepository<Product> context;
         readonly IRepository<ProductCategory> productCategories;
+        readonly IRepository<ProductOnSale> productsOnSale;
         public HomeController(IRepository<Product> productContext,
-          IRepository<ProductCategory> productCategories)
+          IRepository<ProductCategory> productCategories, IRepository<ProductOnSale> productsOnSale)
         {
             context = productContext;
             this.productCategories = productCategories;
+            this.productsOnSale = productsOnSale;
         }
-        public ActionResult Index(string Category = null, string MainCategory = null)
+        public ActionResult Index(string Category = null, string MainCategory = null, string Sale = null)
         {
             List<Product> products;
+            if (Sale !=null)
+            {
+                products = context.Collection().Where(p => p.SaleInfo.Count > 0).ToList();
+                ViewBag.ProductCategories = GetCategories();
+                return View(products);
+            }
 
             if (Category != null)
             {
@@ -38,8 +46,8 @@ namespace WebShop.WebUI.Controllers
                     products = context.Collection().ToList();
                 }
             }
-
            
+         
 
             /* var categories = (from cat in productCategories.Collection().ToList()
                                join child in 
@@ -47,46 +55,38 @@ namespace WebShop.WebUI.Controllers
                                join prod in context.Collection()
                                on cat.Id equals prod.ProductCategoryId
                                where cat.ParentId == null).ToList();*/
-            var cats = new List<ProductCategory>();
+            
+            // var categories = productCategories.Collection()
+            // .Where(c => c.ParentId == null)
+
+            // .Include(c => c.Children)
+
+
+            // .ToList();
+
+
+
+            ViewBag.ProductCategories = GetCategories();
+
+
+            return View(products);
+        }
+        public List<ProductCategory> GetCategories()
+        {
+            var categories = new List<ProductCategory>();
             foreach (var cat in productCategories.Collection().ToList())
             {
                 foreach (var child in cat.Children)
                 {
                     if (child.Products.Count > 0)
                     {
-                       
-                        cats.Add(cat);
+                        categories.Add(cat);
                         break;
                     }
-                    
+
                 }
             }
-           // var categories = productCategories.Collection()
-           // .Where(c => c.ParentId == null)
-            
-           // .Include(c => c.Children)
-           
-            
-           // .ToList();
-
-
-
-            ProductListViewModel model = new ProductListViewModel()
-            {
-                Products = products,
-                ProductCategories = cats
-
-            };
-
-
-
-
-
-
-
-
-
-            return View(model);
+            return categories;
         }
 
         public ActionResult Details(string Id)

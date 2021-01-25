@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +40,9 @@ namespace WebShop.DataAccess.SQL
                 dbSet.Attach(entity);
             }
             dbSet.Remove(entity);
-            
+            context.Entry(entity).State = EntityState.Deleted;
+
+
         }
 
         public T Find(string Id)

@@ -1,59 +1,149 @@
-﻿@model IEnumerable<WebShop.Core.Models.Product>
+﻿@model IEnumerable<WebShop.Core.ViewModels.ProductListViewModel>
 @{ ViewBag.Title = "Index"; }
 <h2>Index</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-responsive">
     <tr>
         <th>
-            Sale
+            @Html.DisplayNameFor(model => model.Product.Image)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Image)
+            @Html.DisplayNameFor(model => model.Product.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Product.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Product.Category)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.Product.Price)
         </th>
+        <th class="bg-danger text-white">
+            Discounted Price
+        </th>
+        <th class="bg-danger text-white">
+            Discount %
+        </th>
+        <th class="bg-danger text-white">
+            Discount Starts
+        </th>
+        <th class="bg-danger text-white">
+            Discount Ends
+        </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            Actions
         </th>
-        <th></th>
     </tr>
-    <form action="/ProductManager/Sale" method="post">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <input type="checkbox" name="sale" />
-                </td>
-                <td>
-                    <img src="~/Content/img/products/@item.Image" alt="Alternate Text" width="80" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
+
+    
+    @foreach (var item in Model)
+    {
+        bool OnSale = item.Sale.Discount != null ? true : false;
+        var tdBackground = OnSale && item.Sale.Discount > 0 ? "bg-danger" : "bg-default";
+<form action="/ProductManager/AddToSale" method="post">
+    <tr>
+        <td>
+            <img src="~/Content/img/products/@item.Product.Image" alt="Alternate Text" width="80" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Category.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Price)
+        </td>
+        <td class="@tdBackground text-white">
+
+            @String.Format("{0:c}", !OnSale ? item.Product.Price : item.Product.Price * (100 - item.Sale.Discount) / 100)
+        </td>
+
+        <td class="@tdBackground">
+            <input type="hidden" id="ProductId" name="ProductId" value="@item.Product.Id" />
+            <input type="hidden" id="Id" name="Id" value="@item.Sale.Id" />
+            <input type="text" Id="Discount " name="Discount" value="@item.Sale.Discount" class="form-control form-control-sm" />
+        </td>
+        <td class="@tdBackground">
+
+        @{ 
+            var Start = OnSale ? item.Sale.Start.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd");
+            var End = OnSale ? item.Sale.End.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd");
         }
-    </form>
+        <input type="date" id="Start" name="Start" value="@Start" class="form-control form-control-sm" />
+        </td>
+        <td class="@tdBackground">
+            <div class="form-group  d-flex flex-row justify-content-between">
+                <input type="date" id="End" name="End" value="@End" class="form-control form-control-sm" />
+                    <input type="submit" value="U" class="btn btn-sm btn-success" />
+                @if (item.Sale.Discount != null)
+                {
+                    <button type="button" class="btn btn-warning btn-sm" data-price="@item.Product.Price" data-discountPrice="" data-id="@item.Sale.Id" data-name="@item.Product.Name" data-toggle="modal" data-target="#deleteModal">D</button>
+                }
+
+            </div>
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Product.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Product.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Product.Id })
+        </td>
+    </tr>
+</form>
+
+    }
+
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/ProductManager/RemoveFromSale" method="post">
+                <div class="modal-body">
+
+                    <input id="Id" name="Id" type="hidden" />
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" value="Confirm Delete" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id');
+            var name = button.data('name');
+            var price = button.data('price');
+            var discountPrice = button.data('discountPrice');
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + name)
+            modal.find('.modal-body input').val(id)
+        })
+    </script>
+}
